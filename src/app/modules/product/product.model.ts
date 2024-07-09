@@ -14,8 +14,25 @@ const productSchema = new Schema<TProduct>({
     category: { type: String, required: true },
     ratings: { type: Number, default: 0 },
     coverImage: { type: String, required: true },
-    images: { type: [String], default: [] }
+    images: { type: [String], default: [] },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+        required: true
+    }
 }, { timestamps: true });
+
+//? find all products those are not deleted
+productSchema.pre('find', async function (next) {
+    this.find({ isDeleted: { $ne: true } })
+    next();
+})
+
+// find single product that is not deleted
+productSchema.pre('findOne', async function (next) {
+    this.findOne({ isDeleted: { $ne: true } })
+    next();
+})
 
 const Product = model<TProduct>('Product', productSchema);
 

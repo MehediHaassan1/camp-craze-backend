@@ -7,4 +7,5 @@ export type TProduct = {
     ratings: number;
     coverImage: string;
     images: string[];
+    isDeleted: boolean;
 }

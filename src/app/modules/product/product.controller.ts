@@ -14,6 +14,57 @@ const createProduct = catchAsync(async (req, res) => {
 })
 
 
+const getProducts = catchAsync(async (req, res) => {
+    const result = await ProductServices.getProductsFromDB();
+    sendResponse(res, {
+        status: httpStatus.OK,
+        success: true,
+        message: 'Products retrieved successfully',
+        data: result,
+    })
+})
+
+
+const getProduct = catchAsync(async (req, res) => {
+    const id = req.params.id;
+    const result = await ProductServices.getProductFromDB(id);
+    sendResponse(res, {
+        status: httpStatus.OK,
+        success: true,
+        message: 'Product retrieved successfully',
+        data: result,
+    })
+})
+
+
+const updateProduct = catchAsync(async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const result = await ProductServices.updateProductIntoDB(id, data);
+    sendResponse(res, {
+        status: httpStatus.OK,
+        success: true,
+        message: 'Products updated successfully',
+        data: result,
+    })
+})
+
+
+const deleteProduct = catchAsync(async (req, res) => {
+    const id = req.params.id;
+    const result = await ProductServices.deleteProductFromDB(id);
+    sendResponse(res, {
+        status: httpStatus.OK,
+        success: true,
+        message: 'Products deleted successfully',
+        data: result,
+    })
+})
+
 export const ProductControllers = {
     createProduct,
+    getProducts,
+    getProduct,
+    updateProduct,
+    deleteProduct,
 }
