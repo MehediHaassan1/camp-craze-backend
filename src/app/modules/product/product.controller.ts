@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { ProductServices } from "./product.service";
+import AppError from "../../errors/AppError";
 
 const createProduct = catchAsync(async (req, res) => {
     const result = await ProductServices.createProductIntoDB(req.body);
@@ -16,6 +17,9 @@ const createProduct = catchAsync(async (req, res) => {
 
 const getProducts = catchAsync(async (req, res) => {
     const result = await ProductServices.getProductsFromDB();
+    if (result.length < 1) {
+        throw new AppError(httpStatus.NOT_FOUND, 'No data found');
+    }
     sendResponse(res, {
         status: httpStatus.OK,
         success: true,

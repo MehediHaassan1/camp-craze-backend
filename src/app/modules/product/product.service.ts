@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import AppError from "../../errors/AppError";
 import { TProduct } from "./product.interface";
 import Product from "./product.model";
 
@@ -16,8 +18,7 @@ const getProductFromDB = async (id: string) => {
     //? check the product exists or not
     const result = await Product.findById(id);
     if (!result) {
-        console.log('Product not found')
-        return;
+        throw new AppError(httpStatus.NOT_FOUND, 'Product not found')
     }
     return result;
 }
@@ -28,8 +29,7 @@ const updateProductIntoDB = async (id: string, payload: Partial<TProduct>) => {
     const product = await Product.findById(id);
     console.log(product)
     if (!product) {
-        console.log('Product not found')
-        return;
+        throw new AppError(httpStatus.NOT_FOUND, 'Product not found')
     }
     const result = await Product.findByIdAndUpdate(id,
         payload,
@@ -43,8 +43,7 @@ const deleteProductFromDB = async (id: string) => {
     const product = await Product.findById(id);
     console.log(product)
     if (!product) {
-        console.log('Product not found')
-        return;
+        throw new AppError(httpStatus.NOT_FOUND, 'Product not found')
     }
 
     //! delete product
