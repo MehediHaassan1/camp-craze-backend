@@ -8,8 +8,29 @@ const createProductIntoDB = async (payload: TProduct) => {
     return result;
 }
 
-const getProductsFromDB = async () => {
-    const result = await Product.find();
+const getProductsFromDB = async (searchQuery: string, sortDirection: number) => {
+    let query: any = {};
+
+    if (searchQuery) {
+        const searchRegex = new RegExp(searchQuery, "i");
+        query = {
+            $or: [
+                { name: searchRegex },
+                { description: searchRegex }
+            ]
+        };
+    }
+
+    let sortCriteria: any = {};
+    if (sortDirection === 0) {
+        sortCriteria = {};
+    } else if (sortDirection === 1) {
+        sortCriteria = { price: 1 };
+    } else if (sortDirection === -1) {
+        sortCriteria = { price: -1 };
+    }
+
+    const result = await Product.find(query).sort(sortCriteria);
     return result;
 }
 
@@ -27,7 +48,6 @@ const getProductFromDB = async (id: string) => {
 const updateProductIntoDB = async (id: string, payload: Partial<TProduct>) => {
     //? check the product exists or not
     const product = await Product.findById(id);
-    console.log(product)
     if (!product) {
         throw new AppError(httpStatus.NOT_FOUND, 'Product not found')
     }
@@ -41,7 +61,6 @@ const updateProductIntoDB = async (id: string, payload: Partial<TProduct>) => {
 const deleteProductFromDB = async (id: string) => {
     //? check the product exists or not
     const product = await Product.findById(id);
-    console.log(product)
     if (!product) {
         throw new AppError(httpStatus.NOT_FOUND, 'Product not found')
     }

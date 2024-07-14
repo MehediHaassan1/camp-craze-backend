@@ -12,14 +12,20 @@ const productSchema = new Schema<TProduct>({
         maxlength: [300, "[Description] cannot exceed 300 characters"]
     },
     category: { type: String, required: true },
-    ratings: { type: Number, default: 0 },
+    ratings: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 5
+    },
     coverImage: { type: String, required: true },
     images: { type: [String], default: [] },
     isDeleted: {
         type: Boolean,
         default: false,
         required: true
-    }
+    },
+    tag: { type: String, required: true }
 }, { timestamps: true });
 
 //? find all products those are not deleted

@@ -44,7 +44,6 @@ const globalErrorHandler = (
         status,
         message,
         errorSources,
-        // error: error
     })
 };
 

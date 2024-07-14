@@ -16,7 +16,8 @@ const createProduct = catchAsync(async (req, res) => {
 
 
 const getProducts = catchAsync(async (req, res) => {
-    const result = await ProductServices.getProductsFromDB();
+    const { search, sort } = req.query;
+    const result = await ProductServices.getProductsFromDB(search as string, parseInt(sort as string));
     if (result.length < 1) {
         throw new AppError(httpStatus.NOT_FOUND, 'No data found');
     }
@@ -25,8 +26,8 @@ const getProducts = catchAsync(async (req, res) => {
         success: true,
         message: 'Products retrieved successfully',
         data: result,
-    })
-})
+    });
+});
 
 
 const getProduct = catchAsync(async (req, res) => {
