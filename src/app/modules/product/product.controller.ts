@@ -3,6 +3,7 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { ProductServices } from "./product.service";
 import AppError from "../../errors/AppError";
+import { Request } from "express";
 
 const createProduct = catchAsync(async (req, res) => {
     const result = await ProductServices.createProductIntoDB(req.body);
@@ -16,23 +17,24 @@ const createProduct = catchAsync(async (req, res) => {
 
 
 const getProducts = catchAsync(async (req, res) => {
-    const { search, sort } = req.query;
-    const result = await ProductServices.getProductsFromDB(search as string, parseInt(sort as string));
-    if (result.length < 1) {
-        throw new AppError(httpStatus.NOT_FOUND, 'No data found');
-    }
+    const { search, sort, category, price } = req.query;
+
+    const result = await ProductServices.getProductsFromDB(search as string, parseInt(sort as string), category as string, parseInt(price as string));
+
     sendResponse(res, {
         status: httpStatus.OK,
         success: true,
         message: 'Products retrieved successfully',
         data: result,
-    });
-});
 
+
+    });
+})
 
 const getProduct = catchAsync(async (req, res) => {
     const id = req.params.id;
     const result = await ProductServices.getProductFromDB(id);
+    console.log(result);
     sendResponse(res, {
         status: httpStatus.OK,
         success: true,

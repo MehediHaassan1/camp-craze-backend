@@ -8,7 +8,7 @@ const createProductIntoDB = async (payload: TProduct) => {
     return result;
 }
 
-const getProductsFromDB = async (searchQuery: string, sortDirection: number) => {
+const getProductsFromDB = async (searchQuery: string, sortDirection: number, category: string, price: number) => {
     let query: any = {};
 
     if (searchQuery) {
@@ -20,6 +20,15 @@ const getProductsFromDB = async (searchQuery: string, sortDirection: number) => 
             ]
         };
     }
+    console.log(query);
+    
+    if (category && category.toLowerCase() !== 'all') {
+        query.category = category;
+    }
+    if (price > 0) {
+        query.price = { $lte: price };
+    }
+
 
     let sortCriteria: any = {};
     if (sortDirection === 0) {
