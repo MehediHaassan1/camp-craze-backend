@@ -8,7 +8,7 @@ const app: Application = express()
 
 
 // parser
-app.use(cors());
+app.use(cors({ origin: ['https://frontend-one-gamma-17.vercel.app', 'http://localhost:5173'] }));
 app.use(express.json());
 
 // routing
