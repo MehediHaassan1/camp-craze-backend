@@ -62,57 +62,70 @@
     yarn start dev
 ```
 
-# Usage
+# Routes
 
-#### 1. <u>Create a new product</u>
+## Product Routes (/products)
 
--   **Endpoint:** ( POST ) `/api/products`
--   **Description:** Create a new product.
--   **Request Body:**
+<strong>POST</strong>
 
-    ```json
-    {
-        "name": "Insulated Sleeping Bag",
-        "price": 89.99,
-        "stock": 100,
-        "description": "Keep warm and comfortable with this insulated sleeping bag. Suitable for temperatures down to -10°C.",
-        "category": "Sleeping Gear",
-        "ratings": 4.7,
-        "coverImage": "https://i.ibb.co/BnqHRZ5/Insulated-Sleeping-Bag.jpg",
-        "images": [
-            "https://i.ibb.co/DQDRBn4/Insulated-Sleeping-Bag-1.jpg",
-            "https://i.ibb.co/bsdCFkS/images.jpg"
-        ],
-        "tag": "new"
-    }
-    ```
+```bash
+    /products
+```
 
-#### 2. <u>Get all products</u>
+<strong>Description: </strong>
+Create a new product.
+<br>
+<strong>Validation:</strong> The request is validated using the <code>createProductValidationSchema</code>.
 
--   **Endpoint:** ( GET ) `/api/products`
--   **Description:** Get all Products.
+<strong>GET</strong>
 
-#### 3. <u>Get single product</u>
+```bash
+    /products
+```
 
--   **Endpoint:** ( GET ) `/api/products/:id`
--   **Description:** Get a single Product.
+<strong>Description: </strong>
+Fetch a list of all products.
+<br>
 
+<strong>GET</strong>
 
-#### 4. <u>Update single product</u>
+```bash
+    /products/:id
+```
 
--   **Endpoint:** ( PATCH ) `/api/products/:id`
--   **Description:** Update a single Product.
--   **Request Body:**
+<strong>Description: </strong>
+Fetch a single product by its id.
+<br>
 
-    ```json
-    {
-        "name": "Insulated Sleeping Bag updated",
-        "stock": 50,
-    }
-    ```
+<strong>PATCH</strong>
 
-#### 5. <u>Delete single product</u>
+```bash
+    /products/:id
+```
 
--   **Endpoint:** ( DELETE ) `/api/products/:id`
--   **Description:** Delete a single Product.
+<strong>Description: </strong>
+Update the details of a product by its id.
+<br>
+<strong>Validation: </strong>
+The request is validated using the <code>updateProductValidationSchema</code>.
 
+<strong>DELETE</strong>
+
+```bash
+    /products/:id
+```
+
+<strong>Description: </strong>
+Delete a product by its id.
+<br>
+
+ ## Order Routes (/order)
+
+<strong>PATCH</strong>
+
+```bash
+    /products/:id
+```
+
+<strong>Description: </strong>
+Update stock based on order data (complete an order).
